@@ -1,5 +1,6 @@
 const adminModel = require("../Models/adminModel");
 const bcrypt = require("bcrypt");
+//POST CONTROLLER
 exports.adminController = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -30,6 +31,29 @@ exports.adminController = async (req, res) => {
     await newUser.save();
     return res.status(201).json({ message: "Register Successfully", newUser });
   } catch (error) {
+    return res.status(500).json({ message: "Server Error" });
+  }
+};
+
+exports.adminLoginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: "All field quired" });
+    }
+    const user = await adminModel.findOne({
+      email: email.toLowerCase(),
+    });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password." });
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid email or password." });
+    }
+    return res.status(200).json({ message: "Login successful." });
+  } catch (error) {
+    console.error("Error during login:", error.message);
     return res.status(500).json({ message: "Server Error" });
   }
 };
