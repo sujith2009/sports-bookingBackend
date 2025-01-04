@@ -17,7 +17,10 @@ app.use(
   "/ourwinnerimages",
   express.static(path.join(__dirname, "public/ourwinnerimages"))
 );
-
+app.use(
+  "/bookVenues",
+  express.static(path.join(__dirname, "public/bookVenues"))
+);
 // Database connection
 connectDatabase();
 
@@ -63,6 +66,16 @@ app.use("/api/our-sports-post", ourSportsPost);
 const ourSportsGet = require("./Routes/oursports");
 //http://localhost:8000/api/our-sports-get
 app.use("/api/our-sports-get", ourSportsGet);
+
+//Book-Venues-Api
+const bookingVenues = require("./Routes/book");
+//POST-API
+//http://localhost:8000/venues/book-venues
+app.use("/venues/book-venues", bookingVenues);
+//Get api
+const bookingGetVenues = require("./Routes/book");
+//http://localhost:8000/venues/get-book-venues
+app.use("/venues/get-book-venues/:id", bookingGetVenues);
 
 // Port running
 app.listen(process.env.PORT, () => {

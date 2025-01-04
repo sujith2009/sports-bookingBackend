@@ -32,7 +32,6 @@ exports.populsrSportsController = (req, res) => {
         sportsName: req.body.sportsName || "Unknown", // Fallback to 'Unknown' if no name provided
         sportsImage: req.file.filename, // Save the filename (stored in public/images)
       });
-
       const result = await newSport.save();
       res.status(201).json({ message: "File uploaded successfully", result });
     } catch (error) {
