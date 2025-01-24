@@ -77,6 +77,16 @@ const bookingGetVenues = require("./Routes/book");
 //http://localhost:8000/venues/get-book-venues
 app.use("/venues/get-book-venues/:id", bookingGetVenues);
 
+//Booknow Register api
+const booknowPostController = require("./Routes/booknow");
+const booknowGetController = require("./Routes/booknow");
+//POST API
+app.use("/api/booknow-players", booknowPostController);
+//http://localhost:8000/api/booknow-players
+app.use("/api/booknow-players/list", booknowGetController);
+//GET API
+//http://localhost:8000/api/booknow-players/list
+
 // Port running
 app.listen(process.env.PORT, () => {
   console.log(
